@@ -1,27 +1,32 @@
-variable "resource_group" {
-  description = "The name of the resource group in which to create the virtual network."
-  }
+##############################################################################
+# Variables File
+# 
+# Here is where we store the default values for all the variables used in our
+# Terraform code. If you create a variable with no default, the user will be
+# prompted to enter it (or define it via config file or command line flags.)
 
-variable "rg_prefix" {
-  description = "The shortened abbreviation to represent your resource group that will go on the front of some resources."
-  default     = "rg"
+variable "resource_group" {
+  description = "The name of your Azure Resource Group."
+  default     = "Azure-Vault-SQL-Demo"
+}
+
+variable "demo_prefix" {
+  description = "This prefix will be included in the name of some resources."
+  default     = "avsdemo"
 }
 
 variable "hostname" {
-  description = "VM name referenced also in storage-related names."
-  }
-
-variable "dns_name" {
-  description = " Label for the Domain Name. Will be used to make up the FQDN. If a domain name label is specified, an A DNS record is created for the public IP in the Microsoft Azure DNS system."
-  }
+  description = "VM hostname. Used for local hostname, DNS, and storage-related names."
+  default     = "azurevaultsql"
+}
 
 variable "location" {
-  description = "The location/region where the virtual network is created. Changing this forces a new resource to be created."
-  default     = "ukwest"
+  description = "The region where the virtual network is created."
+  default     = "centralus"
 }
 
 variable "virtual_network_name" {
-  description = "The name for the virtual network."
+  description = "The name for your virtual network."
   default     = "vnet"
 }
 
@@ -36,12 +41,12 @@ variable "subnet_prefix" {
 }
 
 variable "storage_account_tier" {
-  description = "Defines the Tier of storage account to be created. Valid options are Standard and Premium."
+  description = "Defines the storage tier. Valid options are Standard and Premium."
   default     = "Standard"
 }
 
 variable "storage_replication_type" {
-  description = "Defines the Replication Type to use for this storage account. Valid options include LRS, GRS etc."
+  description = "Defines the replication type to use for this storage account. Valid options include LRS, GRS etc."
   default     = "LRS"
 }
 
@@ -51,29 +56,31 @@ variable "vm_size" {
 }
 
 variable "image_publisher" {
-  description = "name of the publisher of the image (az vm image list)"
+  description = "Name of the publisher of the image (az vm image list)"
   default     = "Canonical"
 }
 
 variable "image_offer" {
-  description = "the name of the offer (az vm image list)"
+  description = "Name of the offer (az vm image list)"
   default     = "UbuntuServer"
 }
 
 variable "image_sku" {
-  description = "image sku to apply (az vm image list)"
+  description = "Image SKU to apply (az vm image list)"
   default     = "16.04-LTS"
 }
 
 variable "image_version" {
-  description = "version of the image to apply (az vm image list)"
+  description = "Version of the image to apply (az vm image list)"
   default     = "latest"
 }
 
 variable "admin_username" {
-  description = "administrator user name"
-  }
+  description = "Administrator user name"
+  default     = "admin"
+}
 
 variable "admin_password" {
-  description = "administrator password (recommended to disable password auth)"
-  }
+  description = "Administrator password"
+  default     = "replace-with-your-password"
+}
