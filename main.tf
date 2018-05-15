@@ -97,15 +97,40 @@ resource "azurerm_network_security_group" "ptfe-sg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+  security_rule {
+    name                       = "HTTP"
+    priority                   = 103
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "ptfe-run"
+    priority                   = 104
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "9870-9880"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
 # A network interface. This is required by the azurerm_virtual_machine 
 # resource. Terraform will let you know if you're missing a dependency.
 resource "azurerm_network_interface" "ptfe-nic" {
-  name                      = "${var.demo_prefix}ptfe-nic"
-  location                  = "${var.location}"
-  resource_group_name       = "${azurerm_resource_group.ptfe.name}"
-  network_security_group_id = "${azurerm_network_security_group.ptfe-sg.id}"
+  name                = "${var.demo_prefix}ptfe-nic"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.ptfe.name}"
+
+  # network_security_group_id = "${azurerm_network_security_group.ptfe-sg.id}"
 
   ip_configuration {
     name                          = "${var.demo_prefix}ipconfig"
@@ -151,6 +176,7 @@ resource "azurerm_virtual_machine" "ptfe" {
     managed_disk_type = "Standard_LRS"
     caching           = "ReadWrite"
     create_option     = "FromImage"
+    disk_size_gb      = "${var.storage_disk_size}"
   }
 
   os_profile {
@@ -163,19 +189,19 @@ resource "azurerm_virtual_machine" "ptfe" {
     disable_password_authentication = false
   }
 
-  # # This shell script starts a ptfe install
-  # provisioner "remote-exec" {
-  #   inline = [
-  #     "curl https://install.terraform.io/ptfe/stable > install_ptfe.sh",
-  #     "chmod 500 install_ptfe.sh",
-  #     "sudo ./install_ptfe.sh no-proxy bypass-storagedriver-warnings",
-  #   ]
+  # This shell script starts a ptfe install
+  provisioner "remote-exec" {
+    inline = [
+      "curl https://install.terraform.io/ptfe/stable > install_ptfe.sh",
+      "chmod 500 install_ptfe.sh",
+      "sudo ./install_ptfe.sh no-proxy bypass-storagedriver-warnings ",
+    ]
 
-  #   connection {
-  #     type     = "ssh"
-  #     user     = "${var.admin_username}"
-  #     password = "${var.admin_password}"
-  #     host     = "${azurerm_public_ip.ptfe-pip.fqdn}"
-  #   }
-  # }
+    connection {
+      type     = "ssh"
+      user     = "${var.admin_username}"
+      password = "${var.admin_password}"
+      host     = "${azurerm_public_ip.ptfe-pip.fqdn}"
+    }
+  }
 }

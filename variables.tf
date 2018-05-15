@@ -45,6 +45,11 @@ variable "storage_account_tier" {
   default     = "Standard"
 }
 
+variable "storage_disk_size" {
+  description = "Defines the OS disk size. minimum is 70"
+  default     = "100"
+}
+
 variable "storage_replication_type" {
   description = "Defines the replication type to use for this storage account. Valid options include LRS, GRS etc."
   default     = "LRS"
@@ -52,7 +57,7 @@ variable "storage_replication_type" {
 
 variable "vm_size" {
   description = "Specifies the size of the virtual machine."
-  default     = "Standard_A0"
+  default     = "Standard_D4_v3"
 }
 
 variable "image_publisher" {

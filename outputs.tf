@@ -8,18 +8,12 @@
 # providing instructions to the user on how to connect to their own custom 
 # demo environment.
 
-output "_PTFE_Server_URL" {
-  value = "http://${azurerm_public_ip.ptfe-pip.fqdn}:8800"
-}
-
-output "Demo Instructions" {
+output "Next Steps" {
   value = <<SHELLCOMMANDS
 
 ##############################################################################
-# Azure Vault MySQL Database Demo Setup
-
-# Step 1: Connect to your Azure Virtual Machine
-# Linux and Mac users, open a terminal and run:
-ssh ${var.admin_username}@${azurerm_public_ip.ptfe-pip.fqdn}
+# Azure PTFE install
+# Continue the PTFE install from:
+http://${azurerm_public_ip.ptfe-pip.fqdn}:8800
 SHELLCOMMANDS
 }
