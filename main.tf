@@ -1,12 +1,11 @@
 ##############################################################################
-# HashiCorp ptfe Dynamic Database Secrets Engine Demo
+# HashiCorp PTFE instlation Demo
 # 
 # This Terraform configuration will create the following:
 #
 # * Resource group with a virtual network and subnet
-# * A HashiCorp ptfe server, preconfigured in demo mode
-# * An Azure MySQL database server and demo database
-
+# * A HashiCorp ptfe server
+# *
 ##############################################################################
 # Shared infrastructure resources
 
@@ -48,15 +47,14 @@ resource "azurerm_subnet" "subnet" {
 # HashiCorp ptfe Server
 #
 # Now that we have a network, we'll deploy a stand-alone HashiCorp ptfe 
-# server. ptfe supports a 'dev' mode which is appropriate for demonstrations
-# and development purposes. In other words, don't do this in production.
+# server.
 
 # An Azure Virtual Machine has several components. In this example we'll build
 # a security group, a network interface, a public ip address, a storage 
 # account and finally the VM itself. Terraform handles all the dependencies 
 # automatically, and each resource is named with user-defined variables.
 
-# Security group to allow inbound access on port 8200 and 22
+# Security group to allow inbound access on port 8200,443,80,22 and 9870-9880
 resource "azurerm_network_security_group" "ptfe-sg" {
   name                = "${var.demo_prefix}-sg"
   location            = "${var.location}"
