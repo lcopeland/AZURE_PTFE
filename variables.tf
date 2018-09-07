@@ -4,21 +4,7 @@
 # Here is where we store the default values for all the variables used in our
 # Terraform code. If you create a variable with no default, the user will be
 # prompted to enter it (or define it via config file or command line flags.)
-variable "subscription_id" {
-  description = "Your Azure subscription id"
-}
 
-variable "tenant_id" {
-  description = "Your Azure tenant id"
-}
-
-variable "client_id" {
-  description = "Your Azure service principle"
-}
-
-variable "client_secret" {
-  description = "Your Azure service principle secret"
-}
 
 variable "resource_group" {
   description = "The name of your Azure Resource Group."
