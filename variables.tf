@@ -8,7 +8,7 @@
 
 variable "resource_group" {
   description = "The name of your Azure Resource Group."
-  default     = "Azure-Vault-SQL-Demo"
+  default     = "Azure-Vault-GUY-Demo"
 }
 
 variable "demo_prefix" {
