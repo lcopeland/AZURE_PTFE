@@ -13,6 +13,7 @@
 # resource group. Think of it as a container to hold all your resources. 
 # You can find a complete list of Azure resources supported by Terraform here:
 # https://www.terraform.io/docs/providers/azurerm/
+#this change doesnt do anything
 resource "azurerm_resource_group" "ptfe" {
   name     = "${var.resource_group}"
   location = "${var.location}"
