@@ -8,7 +8,7 @@
 # providing instructions to the user on how to connect to their own custom 
 # demo environment.
 
-output "Next Steps" {
+output "next_steps" {
   value = <<SHELLCOMMANDS
 
 ##############################################################################
